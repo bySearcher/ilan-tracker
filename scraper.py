@@ -27,7 +27,7 @@ KEYWORDS = [
 BASE_URL   = "https://www.ilan.gov.tr"
 SEARCH_URL = "https://www.ilan.gov.tr/ilan/kategori/8/kamu-akademik-personel"
 SEEN_FILE  = "data/seen_ids.json"
-TEST_MODE  = True   # Test bitti, False bırakın
+TEST_MODE  = False   # Test bitti, False bırakın
 
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -169,7 +169,7 @@ def main():
     all_listings = []
 
     try:
-        for page in range(1, 8):   # En fazla 7 sayfa (112 ilan / ~20 = 6 sayfa)
+        for page in range(1, 20):   # En fazla 7 sayfa (112 ilan / ~20 = 6 sayfa)
             page_items = fetch_page(driver, page)
             if not page_items:
                 print(f"[Sayfa {page}] Boş, duruyorum.")
