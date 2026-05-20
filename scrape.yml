@@ -1,0 +1,55 @@
+name: ilan.gov.tr Akademik Kadro Takip
+
+on:
+  schedule:
+    # Her 12 saatte bir çalışır: gece 00:00 ve öğlen 12:00 (UTC) = TR 03:00 ve 15:00
+    - cron: "0 0,12 * * *"
+
+  # Elle de tetikleyebilirsiniz (GitHub > Actions > Run workflow)
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Kodu çek
+        uses: actions/checkout@v4
+        with:
+          # Seen IDs dosyasını güncelleyip commit edebilmek için token gerekli
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Bağımlılıkları yükle
+        run: pip install requests beautifulsoup4 urllib3
+
+      - name: data/ klasörünü oluştur
+        run: mkdir -p data
+
+      # Önceki çalışmada kayıt edilen seen_ids.json dosyasını önbellekten al
+      - name: Önbellek – seen_ids.json
+        uses: actions/cache@v4
+        with:
+          path: data/seen_ids.json
+          key: seen-ids-${{ github.run_id }}
+          restore-keys: |
+            seen-ids-
+
+      - name: Tarayıcıyı çalıştır
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scraper.py
+
+      # Güncellenen seen_ids.json'ı repoya commit et (persistence için)
+      - name: Seen IDs'yi repoya kaydet
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/seen_ids.json
+          git diff --cached --quiet || git commit -m "chore: seen_ids güncellendi [skip ci]"
+          git push
