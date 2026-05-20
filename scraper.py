@@ -63,8 +63,7 @@ def make_id(title: str, url: str) -> str:
 
 
 def matches_keywords(text: str) -> bool:
-    text_lower = text.lower()
-    return any(kw in text_lower for kw in KEYWORDS)
+    return True  # TEST MODU: tüm ilanları eşleştir
 
 
 def send_telegram(message: str):
