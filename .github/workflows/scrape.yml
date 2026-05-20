@@ -8,6 +8,7 @@ on:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+
     steps:
       - name: Kodu çek
         uses: actions/checkout@v4
@@ -19,8 +20,11 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Bağımlılıkları yükle
-        run: pip install requests beautifulsoup4 urllib3
+      - name: Chrome ve ChromeDriver kur
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y google-chrome-stable
+          pip install selenium webdriver-manager requests beautifulsoup4
 
       - name: data/ klasörünü oluştur
         run: mkdir -p data
