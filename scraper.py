@@ -30,7 +30,7 @@ SEARCH_URL = "https://www.ilan.gov.tr/ilan/kategori/8/kamu-akademik-personel"
 SEEN_FILE  = "data/seen_ids.json"
 
 # TEST MODU: True iken tüm ilanları eşleştir (ilk çalıştırmada True bırakın)
-TEST_MODE = False
+TEST_MODE = True
 
 # ── Yardımcı Fonksiyonlar ────────────────────────────────────────────────────
 
