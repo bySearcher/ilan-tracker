@@ -33,7 +33,7 @@ ILAN_BASE      = "https://www.ilan.gov.tr"
 ILAN_URL       = "https://www.ilan.gov.tr/ilan/kategori/8/kamu-akademik-personel"
 RG_BASE        = "https://www.resmigazete.gov.tr"
 SEEN_FILE      = "data/seen_ids.json"
-TEST_MODE      = False   # True = tüm ilanları eşleştir (test için)
+TEST_MODE      = True   # True = tüm ilanları eşleştir (test için)
 
 HEADERS = {
     "User-Agent": (
